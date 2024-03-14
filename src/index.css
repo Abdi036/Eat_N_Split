@@ -1,0 +1,187 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.container {
+  text-align: center;
+  padding: 0 0 4rem 0;
+}
+.App {
+  min-width: 700px;
+  height: 70vh;
+  display: grid;
+  grid-template-columns: 5fr 4fr;
+  gap: 1rem;
+  background-color: #f9f7f7;
+  border-radius: 15px;
+}
+.Friends_container {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+.profile_pic_container {
+  padding: 0 0.5rem;
+}
+
+.profile_pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+}
+
+.buttons,
+.AddBtn,
+.closeBtn {
+  padding: 10px 1rem;
+  border: none;
+  border-radius: 20px;
+  background-color: #e4790f;
+  font-weight: bold;
+  cursor: pointer;
+}
+.buttons:hover,
+.AddBtn:hover,
+.closeBtn:hover {
+  opacity: 0.8;
+  transition: all 0.5s;
+}
+.buttons:active,
+.AddBtn:active,
+.closeBtn:active {
+  opacity: 1;
+  transform: translateY(2px);
+}
+.AddBtn {
+  margin-left: 16rem;
+  padding: 10px 2rem;
+}
+
+.closeBtn {
+  margin: 15px 0 0 17rem;
+  padding: 10px 2rem;
+}
+
+.select {
+  margin-left: 3.5rem;
+}
+
+.center-container {
+  background-color: #ffe4ae;
+  padding: 1rem;
+  border-radius: 15px;
+}
+
+form {
+  width: 300px;
+}
+
+.form_container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+label {
+  flex: 1;
+  margin-right: 10px;
+}
+
+input {
+  flex: 2;
+  padding: 5px;
+}
+
+/* side bar bill */
+
+.split_bill_container {
+  width: 100%;
+}
+.Form_wrapper {
+  padding: 1rem;
+  background-color: #ffe4ae;
+  padding: 1rem;
+  border-radius: 15px;
+}
+
+.input_container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+label {
+  flex: 1;
+  margin-right: 10px;
+}
+
+input,
+select {
+  flex: 2;
+  padding: 5px;
+}
+.splitBtn {
+  margin: 1rem 0 0 15rem;
+}
+/* conditional classes */
+.selected {
+  background-color: #f7ecd59f;
+  border-radius: 15px;
+}
+
+/* Responsiveeness */
+
+@media (max-width: 768px) {
+  .App {
+    grid-template-columns: 1fr; /* Adjust to single column layout */
+    min-width: auto; /* Remove minimum width */
+    height: auto; /* Adjust height as needed */
+  }
+
+  .AddBtn,
+  .closeBtn {
+    margin-left: 0; /* Reset margin for buttons */
+  }
+
+  .closeBtn {
+    margin: 15px 0; /* Adjust margin for close button */
+  }
+
+  .splitBtn {
+    margin: 1rem 0; /* Adjust margin for split button */
+  }
+}
+
+@media (max-width: 576px) {
+  .profile_pic {
+    width: 40px; /* Adjust profile picture size */
+    height: 40px;
+    border-radius: 20px; /* Adjust profile picture border radius */
+  }
+
+  .profile_pic_container {
+    padding: 0 0.3rem; /* Adjust padding for profile picture container */
+  }
+
+  .Friends_container {
+    padding: 0.5rem; /* Adjust padding for friend container */
+  }
+
+  .buttons,
+  .AddBtn,
+  .closeBtn,
+  .splitBtn {
+    padding: 8px 1rem; /* Adjust padding for buttons */
+    font-size: 0.8rem; /* Decrease font size for buttons */
+  }
+}
