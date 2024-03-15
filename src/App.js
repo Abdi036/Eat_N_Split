@@ -23,9 +23,16 @@ const initial = [
 export default function App() {
   const [showaddFriends, setShowaddFriends] = useState(false);
   const [Friend, setFriend] = useState(initial);
+  const [selected, setSelected] = useState(null);
+
+  function handleSelected(friend) {
+    setSelected((cur) => (cur?.id === friend.id ? null : friend));
+    setShowaddFriends(false);
+  }
 
   // to display and hide button
   function handleShowAddFriend() {
+    setSelected(null);
     setShowaddFriends(!showaddFriends);
   }
 
@@ -39,14 +46,21 @@ export default function App() {
       <Header />
       <div className="App">
         <div>
-          <Friends Friend={Friend} showaddFriends={showaddFriends} />
+          <Friends
+            Friend={Friend}
+            showaddFriends={showaddFriends}
+            Onselected={handleSelected}
+            selected={selected}
+          />
+
           {showaddFriends && <AddFriends OnhandleAddFriend={handleAddFriend} />}
+
           <Button onClick={handleShowAddFriend}>
             {showaddFriends ? "Close" : "Add Friends"}
           </Button>
         </div>
 
-        <Split />
+        {selected && <Split selected={selected} />}
       </div>
     </div>
   );
@@ -59,31 +73,43 @@ function Header() {
   );
 }
 
-function Friends({ Friend }) {
+function Friends({ Friend, Onselected, selected }) {
   return (
     <div>
-      {Friend.map((friend, index) => (
-        <div key={index} className="Friends_container">
-          <div className="profile_pic_container">
-            <img className="profile_pic" src={friend.image} alt={friend.name} />
+      {Friend.map((friend) => {
+        const isSelected = friend.id === selected?.id;
+        return (
+          <div
+            key={friend.id}
+            className={`Friends_container ${isSelected ? "selected" : ""}`}
+          >
+            <div className="profile_pic_container">
+              <img
+                className="profile_pic"
+                src={friend.image}
+                alt={friend.name}
+              />
+            </div>
+            <div style={{ width: "150px" }}>
+              <h4>{friend.name}</h4>
+              {friend.balance < 0 && (
+                <p>
+                  You owe {friend.name} {Math.abs(friend.balance)}$
+                </p>
+              )}
+              {friend.balance > 0 && (
+                <p>
+                  {friend.name} owes you {Math.abs(friend.balance)}$
+                </p>
+              )}
+              {friend.balance === 0 && <p>You and {friend.name} are even</p>}
+            </div>
+            <Button onClick={() => Onselected(friend)}>
+              {isSelected ? "close" : "Select"}
+            </Button>
           </div>
-          <div style={{ width: "150px" }}>
-            <h4>{friend.name}</h4>
-            {friend.balance < 0 && (
-              <p>
-                You owe {friend.name} {Math.abs(friend.balance)}$
-              </p>
-            )}
-            {friend.balance > 0 && (
-              <p>
-                {friend.name} owes you {Math.abs(friend.balance)}$
-              </p>
-            )}
-            {friend.balance === 0 && <p>You and {friend.name} are even</p>}
-          </div>
-          <Button>select</Button>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
@@ -146,11 +172,13 @@ function AddFriends({ OnhandleAddFriend }) {
   );
 }
 
-function Split() {
+function Split({ selected }) {
   return (
     <div className="split_bill_container">
       <div className="Form_wrapper">
-        <h2 style={{ paddingBottom: "20px" }}>SPLIT A BILL WITH X</h2>
+        <h2 style={{ paddingBottom: "20px" }}>
+          SPLIT A BILL WITH {selected.name}
+        </h2>
         <form>
           <div className="input_container">
             <label>Bill value</label>
@@ -161,14 +189,14 @@ function Split() {
             <input type="number" />
           </div>
           <div className="input_container">
-            <label>X's expense</label>
+            <label>{selected.name}'s expense</label>
             <input type="number" disabled />
           </div>
           <div>
             <label>Who is paying the bill?</label>
             <select>
               <option>You</option>
-              <option>Your Friend</option>
+              <option>{selected.name}</option>
             </select>
           </div>
         </form>
