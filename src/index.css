@@ -28,7 +28,6 @@ body {
   justify-content: left;
   padding: 0.5rem;
   margin-bottom: 1.5rem;
-  cursor: pointer;
 }
 .profile_pic_container {
   padding: 0 0.5rem;
@@ -139,7 +138,7 @@ select {
 .splitBtn {
   margin: 1rem 0 0 15rem;
 }
-/* conditional classes */
+/* ///////////////////conditional classes////////////////////////// */
 .selected {
   background-color: #f7ecd59f;
   border-radius: 15px;
