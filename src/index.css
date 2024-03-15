@@ -11,11 +11,11 @@ body {
 }
 .container {
   text-align: center;
-  padding: 0 0 4rem 0;
+  padding: 0 0 2rem 0;
 }
 .App {
   min-width: 700px;
-  height: 70vh;
+  height: 80vh;
   display: grid;
   grid-template-columns: 5fr 4fr;
   gap: 1rem;
@@ -27,7 +27,7 @@ body {
   align-items: center;
   justify-content: left;
   padding: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   cursor: pointer;
 }
 .profile_pic_container {
@@ -38,6 +38,12 @@ body {
   width: 50px;
   height: 50px;
   border-radius: 25px;
+}
+.btnContainer {
+  display: flex;
+  justify-content: right;
+  margin-left: 2rem;
+  padding: 1rem 0;
 }
 
 .buttons,
@@ -63,7 +69,7 @@ body {
   transform: translateY(2px);
 }
 .AddBtn {
-  margin-left: 16rem;
+  margin-left: 18rem;
   padding: 10px 2rem;
 }
 
@@ -143,45 +149,45 @@ select {
 
 @media (max-width: 768px) {
   .App {
-    grid-template-columns: 1fr; /* Adjust to single column layout */
-    min-width: auto; /* Remove minimum width */
-    height: auto; /* Adjust height as needed */
+    grid-template-columns: 1fr;
+    min-width: auto;
+    height: auto;
   }
 
   .AddBtn,
   .closeBtn {
-    margin-left: 0; /* Reset margin for buttons */
+    margin-left: 0;
   }
 
   .closeBtn {
-    margin: 15px 0; /* Adjust margin for close button */
+    margin: 15px 0;
   }
 
   .splitBtn {
-    margin: 1rem 0; /* Adjust margin for split button */
+    margin: 1rem 0;
   }
 }
 
 @media (max-width: 576px) {
   .profile_pic {
-    width: 40px; /* Adjust profile picture size */
+    width: 40px;
     height: 40px;
-    border-radius: 20px; /* Adjust profile picture border radius */
+    border-radius: 20px;
   }
 
   .profile_pic_container {
-    padding: 0 0.3rem; /* Adjust padding for profile picture container */
+    padding: 0 0.3rem;
   }
 
   .Friends_container {
-    padding: 0.5rem; /* Adjust padding for friend container */
+    padding: 0.5rem;
   }
 
   .buttons,
   .AddBtn,
   .closeBtn,
   .splitBtn {
-    padding: 8px 1rem; /* Adjust padding for buttons */
-    font-size: 0.8rem; /* Decrease font size for buttons */
+    padding: 8px 1rem;
+    font-size: 0.8rem;
   }
 }

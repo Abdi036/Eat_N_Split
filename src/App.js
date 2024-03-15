@@ -1,27 +1,51 @@
-const intial = [
+import { useState } from "react";
+const initial = [
   {
-    name: "Hope Kumela",
-    image: "placeholder.jpg",
-    message: "You owe Clark 7$",
+    id: 118834,
+    name: "Clark",
+    image: "https://i.pravatar.cc/48?u=118836",
+    balance: -7,
   },
   {
-    name: "Hope Kumela",
-    image: "placeholder.jpg",
-    message: "Sarah owes you 50$",
+    id: 933272,
+    name: "Sarah",
+    image: "https://i.pravatar.cc/48?u=933372",
+    balance: 20,
   },
   {
-    name: "Hope Kumela",
-    image: "placeholder.jpg",
-    message: "you and Jonas are even",
+    id: 496476,
+    name: "Anthony",
+    image: "https://i.pravatar.cc/48?u=499476",
+    balance: 0,
   },
 ];
 
 export default function App() {
+  const [showaddFriends, setShowaddFriends] = useState(false);
+  const [Friend, setFriend] = useState(initial);
+
+  // to display and hide button
+  function handleShowAddFriend() {
+    setShowaddFriends(!showaddFriends);
+  }
+
+  // To render new friend to the component
+  function handleAddFriend(friend) {
+    setFriend((F) => [...Friend, friend]);
+  }
+
   return (
     <div>
       <Header />
       <div className="App">
-        <Friends />
+        <div>
+          <Friends Friend={Friend} showaddFriends={showaddFriends} />
+          {showaddFriends && <AddFriends OnhandleAddFriend={handleAddFriend} />}
+          <Button onClick={handleShowAddFriend}>
+            {showaddFriends ? "Close" : "Add Friends"}
+          </Button>
+        </div>
+
         <Split />
       </div>
     </div>
@@ -35,75 +59,109 @@ function Header() {
   );
 }
 
-function Friends() {
+function Friends({ Friend }) {
   return (
     <div>
-      {intial.map((friend) => (
-        <div className="Friends_container">
+      {Friend.map((friend, index) => (
+        <div key={index} className="Friends_container">
           <div className="profile_pic_container">
-            <img
-              className="profile_pic"
-              src={`img/${friend.image}`}
-              alt={friend.name}
-            />
+            <img className="profile_pic" src={friend.image} alt={friend.name} />
           </div>
           <div style={{ width: "150px" }}>
             <h4>{friend.name}</h4>
-            <p>{friend.message}</p>
+            {friend.balance < 0 && (
+              <p>
+                You owe {friend.name} {Math.abs(friend.balance)}$
+              </p>
+            )}
+            {friend.balance > 0 && (
+              <p>
+                {friend.name} owes you {Math.abs(friend.balance)}$
+              </p>
+            )}
+            {friend.balance === 0 && <p>You and {friend.name} are even</p>}
           </div>
           <Button>select</Button>
         </div>
       ))}
-      <AddFriends />
     </div>
   );
 }
 
-function Button({ children }) {
+function Button({ children, onClick }) {
   return (
-    <div>
-      <button className="buttons select">{children}</button>
+    <div className="btnContainer">
+      <button className="buttons select" onClick={onClick}>
+        {children}
+      </button>
     </div>
   );
 }
 
-function AddFriends() {
+function AddFriends({ OnhandleAddFriend }) {
+  const [name, setFriendName] = useState("");
+  const [image, setFriendImage] = useState("https://i.pravatar.cc/48");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!name || !image) return;
+
+    const id = crypto.randomUUID();
+    const newFriend = {
+      id,
+      name,
+      image: `${image}?=${id}`,
+      balance: 0,
+    };
+
+    OnhandleAddFriend(newFriend);
+    setFriendName("");
+    setFriendImage("https://i.pravatar.cc/48");
+  }
+
   return (
     <div>
-      <div class="center-container">
-        <form>
-          <div class="form_container">
-            <label for="friend_name">Friend Name</label>
-            <input type="text" />
+      <div className="center-container">
+        <form onSubmit={handleSubmit}>
+          <div className="form_container">
+            <label>Friend Name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setFriendName(e.target.value)}
+            />
           </div>
-          <div class="form_container">
-            <label for="image_url">Image URL</label>
-            <input type="text" />
+          <div className="form_container">
+            <label>Image URL</label>
+            <input
+              type="text"
+              value={image}
+              onChange={(e) => setFriendImage(e.target.value)}
+            />
           </div>
           <button className="AddBtn">Add</button>
         </form>
       </div>
-      <button className="closeBtn">Close</button>
     </div>
   );
 }
 
 function Split() {
   return (
-    <div class="split_bill_container">
+    <div className="split_bill_container">
       <div className="Form_wrapper">
         <h2 style={{ paddingBottom: "20px" }}>SPLIT A BILL WITH X</h2>
         <form>
-          <div class="input_container">
-            <label for="bill_value">Bill value</label>
+          <div className="input_container">
+            <label>Bill value</label>
             <input type="number" />
           </div>
-          <div class="input_container">
-            <label for="your_expense">Your expense</label>
+          <div className="input_container">
+            <label>Your expense</label>
             <input type="number" />
           </div>
-          <div class="input_container">
-            <label for="xs_expense">X's expense</label>
+          <div className="input_container">
+            <label>X's expense</label>
             <input type="number" disabled />
           </div>
           <div>
