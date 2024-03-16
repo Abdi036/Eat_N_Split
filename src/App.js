@@ -2,19 +2,19 @@ import { useState } from "react";
 const initial = [
   {
     id: 118834,
-    name: "Clark",
+    name: "Boni",
     image: "https://i.pravatar.cc/48?u=118836",
     balance: -7,
   },
   {
     id: 933272,
-    name: "Sarah",
+    name: "Hope",
     image: "https://i.pravatar.cc/48?u=933372",
     balance: 20,
   },
   {
     id: 496476,
-    name: "Anthony",
+    name: "Segni",
     image: "https://i.pravatar.cc/48?u=499476",
     balance: 0,
   },
@@ -41,6 +41,17 @@ export default function App() {
     setFriend((F) => [...Friend, friend]);
   }
 
+  function handleSplitBill(value) {
+    setFriend((friends) =>
+      friends.map((friend) =>
+        friend.id === selected.id
+          ? { ...friend, balance: friend.balance + value }
+          : friend
+      )
+    );
+    setSelected(null);
+  }
+
   return (
     <div>
       <Header />
@@ -60,7 +71,9 @@ export default function App() {
           </Button>
         </div>
 
-        {selected && <Split selected={selected} />}
+        {selected && (
+          <Split selected={selected} onSplitBill={handleSplitBill} />
+        )}
       </div>
     </div>
   );
@@ -93,12 +106,12 @@ function Friends({ Friend, Onselected, selected }) {
             <div style={{ width: "150px" }}>
               <h4>{friend.name}</h4>
               {friend.balance < 0 && (
-                <p>
+                <p className="red">
                   You owe {friend.name} {Math.abs(friend.balance)}$
                 </p>
               )}
               {friend.balance > 0 && (
-                <p>
+                <p className="green">
                   {friend.name} owes you {Math.abs(friend.balance)}$
                 </p>
               )}
@@ -172,35 +185,64 @@ function AddFriends({ OnhandleAddFriend }) {
   );
 }
 
-function Split({ selected }) {
+function Split({ selected, onSplitBill }) {
+  const [bill, setBill] = useState("");
+  const [userExpense, setExpense] = useState("");
+
+  const paidBy = bill - userExpense;
+
+  const [whoIsPaying, setwhoIsPaying] = useState("user");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!bill || !userExpense) return;
+    onSplitBill(whoIsPaying === "user" ? paidBy : -userExpense);
+  }
   return (
     <div className="split_bill_container">
       <div className="Form_wrapper">
         <h2 style={{ paddingBottom: "20px" }}>
           SPLIT A BILL WITH {selected.name}
         </h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="input_container">
             <label>Bill value</label>
-            <input type="number" />
+            <input
+              type="number"
+              value={bill}
+              onChange={(e) => setBill(Number(e.target.value))}
+            />
           </div>
           <div className="input_container">
-            <label>Your expense</label>
-            <input type="number" />
+            <label>Your Expense</label>
+            <input
+              type="number"
+              value={userExpense}
+              onChange={(e) =>
+                setExpense(
+                  Number(e.target.value) > bill
+                    ? userExpense
+                    : Number(e.target.value)
+                )
+              }
+            />
           </div>
           <div className="input_container">
-            <label>{selected.name}'s expense</label>
-            <input type="number" disabled />
+            <label>{selected.name}'s userExpense</label>
+            <input type="number" disabled value={paidBy} />
           </div>
           <div>
             <label>Who is paying the bill?</label>
-            <select>
-              <option>You</option>
-              <option>{selected.name}</option>
+            <select
+              value={whoIsPaying}
+              onChange={(e) => setwhoIsPaying(e.target.value)}
+            >
+              <option value="user">You</option>
+              <option value="Friend">{selected.name}</option>
             </select>
           </div>
+          <Button>Split bill</Button>
         </form>
-        <button className="buttons splitBtn">Split</button>
       </div>
     </div>
   );
