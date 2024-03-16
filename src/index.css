@@ -8,6 +8,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  background-color: #ebeaea;
 }
 .container {
   text-align: center;
@@ -135,13 +136,20 @@ select {
   flex: 2;
   padding: 5px;
 }
-.splitBtn {
+/* .splitBtn {
   margin: 1rem 0 0 15rem;
-}
+} */
 /* ///////////////////conditional classes////////////////////////// */
 .selected {
   background-color: #f7ecd59f;
   border-radius: 15px;
+}
+
+.green {
+  color: #4fd455;
+}
+.red {
+  color: #e90505;
 }
 
 /* Responsiveeness */
