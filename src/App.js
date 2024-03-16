@@ -2,7 +2,7 @@ import { useState } from "react";
 const initial = [
   {
     id: 118834,
-    name: "Boni",
+    name: "Robsen",
     image: "https://i.pravatar.cc/48?u=118836",
     balance: -7,
   },
@@ -103,7 +103,7 @@ function Friends({ Friend, Onselected, selected }) {
                 alt={friend.name}
               />
             </div>
-            <div style={{ width: "150px" }}>
+            <div style={{ width: "180px" }}>
               <h4>{friend.name}</h4>
               {friend.balance < 0 && (
                 <p className="red">

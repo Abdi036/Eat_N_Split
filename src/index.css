@@ -16,7 +16,7 @@ body {
 }
 .App {
   min-width: 700px;
-  height: 80vh;
+  height: auto;
   display: grid;
   grid-template-columns: 5fr 4fr;
   gap: 1rem;
