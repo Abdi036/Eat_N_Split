@@ -136,9 +136,7 @@ select {
   flex: 2;
   padding: 5px;
 }
-/* .splitBtn {
-  margin: 1rem 0 0 15rem;
-} */
+ 
 /* ///////////////////conditional classes////////////////////////// */
 .selected {
   background-color: #f7ecd59f;
