@@ -232,7 +232,7 @@ function Split({ selected, onSplitBill }) {
             />
           </div>
           <div className="input_container">
-            <label>{selected.name}'s userExpense</label>
+            <label>{selected.name}'s Expense</label>
             <input type="number" disabled value={paidBy} />
           </div>
           <div>
