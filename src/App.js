@@ -72,7 +72,11 @@ export default function App() {
         </div>
 
         {selected && (
-          <Split selected={selected} onSplitBill={handleSplitBill} />
+          <Split
+            key={selected.id}
+            selected={selected}
+            onSplitBill={handleSplitBill}
+          />
         )}
       </div>
     </div>
